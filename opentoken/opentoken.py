@@ -15,9 +15,16 @@ class OpenToken:
     def __init__(self, cipher_suite, password, **kwargs):
         self.cipher_suite = cipher_suite
         self.password = password
-        self.time_tolerance = kwargs.get("tokenTolerance", 120) * 1000  #: 2 minutes
-        self.token_lifetime = kwargs.get("tokenLifetime", 300) * 1000  #: 5 minutes
-        self.time_renewal = kwargs.get("tokenRenewal", 43200) * 1000  #: 12 hours
+
+        self.time_tolerance = kwargs.get(
+            "tokenTolerance", 120
+        ) * 1000  #: 2 minutes
+        self.token_lifetime = kwargs.get(
+            "tokenLifetime", 300
+        ) * 1000  #: 5 minutes
+        self.time_renewal = kwargs.get(
+            "tokenRenewal", 43200
+        ) * 1000  #: 12 hours
 
     def parse_token(self):
         """Parse an OpenToken and apply basic validation checks.

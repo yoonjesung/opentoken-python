@@ -18,23 +18,20 @@ def validate_cipher_suite_id(cipher_suite_id: int) -> int:
     return cipher_suite_id
 
 
-def validate_password(password: Union[str, bytes]) -> bytes:
+def validate_password(password: Union[str, bytes]) -> Union[str, bytes]:
     """Validate and reformat password argument.
 
     Args:
-        password: Byte or string encryption password.
+        password: Encryption password.
 
     Returns:
-        The byte representation of the password.
+        The original password string.
 
     """
     if password is None:
-        password = b""
+        password = ""
 
-    if isinstance(password, str):
-        password = bytes(password, "utf-8")
-
-    if not isinstance(password, bytes):
+    if not isinstance(password, str) and not isinstance(password, bytes):
         raise TypeError("Invalid password type")
 
     return password

@@ -20,6 +20,6 @@ class TestValidations:
     def test_password_validations(self):
         with pytest.raises(TypeError):
             validations.validate_password(3)
-        assert isinstance(validations.validate_password("123"), bytes) is True
+        assert isinstance(validations.validate_password("123"), str) is True
         assert isinstance(validations.validate_password(b"123"), bytes) is True
-        assert isinstance(validations.validate_password(None), bytes) is True
+        assert isinstance(validations.validate_password(None), str) is True

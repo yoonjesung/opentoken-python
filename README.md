@@ -4,7 +4,7 @@
 
 OpenToken support for Python.
 
-A Python implementation of generating and parsing OpenTokens. The much of this implementation is borrowed from [node-opentoken](https://github.com/73rhodes/node-opentoken).
+A Python implementation of generating and parsing OpenTokens. Much of this implementation is borrowed from [node-opentoken](https://github.com/73rhodes/node-opentoken).
 
 https://tools.ietf.org/html/draft-smith-opentoken-02
 

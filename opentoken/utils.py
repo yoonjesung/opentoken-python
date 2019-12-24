@@ -100,7 +100,31 @@ def reformat_from_otk_b64(token):
 
 
 def ordered_dict_to_otk_str(otk_dict):
+    """Converts an OrderedDict to a OpenToken string.
+
+    Args:
+        otk_dict (OrderedDict): OrderedDict representation of the token.
+
+    Returns:
+        str: String representation of the token.
+
+    """
     otk_list = []
     for k, v in otk_dict.items():
         otk_list.append("{0}={1}".format(k, v))
     return "\n".join(otk_list)
+
+
+def otk_str_to_ordered_dict(otk_str):
+    """Converts an OrderedDict to a OpenToken string.
+
+    Args:
+        otk_str (str): String representation of the token.
+
+    Returns:
+        OrderedDict: OrderedDict representation of the token.
+
+    """
+    items = otk_str.split("\n")
+    pairs = [tuple(line.split("=")) for line in items]
+    return OrderedDict(pairs)

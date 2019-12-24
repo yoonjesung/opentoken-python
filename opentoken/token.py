@@ -1,11 +1,12 @@
 """Token helper methods
 """
+from __future__ import absolute_import
 
 import base64
 from collections import OrderedDict
 from zlib import compress, decompress
 
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES, DES3
 from Crypto.Hash import SHA1, HMAC
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
@@ -50,9 +51,15 @@ def encode(payload, cipher_suite_id, password=None):
     hmac_digest = hmac.digest()
 
     zipped_data = compress(payload)
-    aes = AES.new(encryption_key, AES.MODE_CBC, iv=iv)
 
-    payload_cipher_text = aes.encrypt(pad(zipped_data, AES.block_size))
+    if cipher_suite_id == 3:
+        cipher_type = DES3
+    else:
+        cipher_type = AES
+    cipher = cipher_type.new(encryption_key, cipher_type.MODE_CBC, iv=iv)
+    payload_cipher_text = cipher.encrypt(
+        pad(zipped_data, cipher_type.block_size)
+    )
 
     otk_buffer = bytearray("OTK", "utf-8")  #: OTK literal
     otk_buffer.append(1)  #: Version identifier
@@ -125,9 +132,9 @@ def decode(otk, cipher_suite_id, password=None):
         read_index += iv_length
 
     #: Extract the Key Info (if present) and select a key for decryption
-    key_info = None
     key_info_length = int.from_bytes(otk[read_index:read_index + 1], "big")
     read_index += 1
+    key_info = None
     if key_info_length > 0:
         key_info = otk[read_index:read_index + key_info_length]
         read_index += key_info_length
@@ -140,8 +147,17 @@ def decode(otk, cipher_suite_id, password=None):
     read_index += 2
     payload_cipher_text = otk[read_index:read_index + payload_length]
 
-    aes = AES.new(decryption_key, AES.MODE_CBC, iv=iv)
-    zipped_data = unpad(aes.decrypt(payload_cipher_text), AES.block_size)
+    if cipher_suite_id == 3:
+        cipher_type = DES3
+    else:
+        cipher_type = AES
+    cipher = cipher_type.new(decryption_key, cipher_type.MODE_CBC, iv=iv)
+    try:
+        zipped_data = unpad(
+            cipher.decrypt(payload_cipher_text), cipher_type.block_size
+        )
+    except ValueError:
+        raise ValueError("Error decrypting token.")
 
     #: Decompress the decrypted payload in accordance with RFC1950 and RFC1951
     payload = decompress(zipped_data)
@@ -164,4 +180,4 @@ def decode(otk, cipher_suite_id, password=None):
     if hmac_test.hexdigest() != hmac.hex():
         raise ValueError("HMAC does not match.")
 
-    return payload.decode()
+    return utils.otk_str_to_ordered_dict(payload.decode())

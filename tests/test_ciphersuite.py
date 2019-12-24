@@ -14,3 +14,7 @@ class TestValidations:
         assert len(derived_key) == 16
         derived_key = ciphersuite.generate_key("", 3)
         assert len(derived_key) == 21
+
+    def test_cipher_suite_0(self):
+        derived_key = ciphersuite.generate_key("", 0)
+        assert derived_key is None

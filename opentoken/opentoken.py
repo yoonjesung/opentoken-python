@@ -6,25 +6,21 @@ class OpenToken:
     """API class for generating and reading OpenTokens.
 
     Args:
-        cipher_suite (int): Cipher suite id.
         password (str): Password used for encryption/decryption.
-        kwargs (dict): Additional configuration keyword-arguments.
+        cipher_suite_id (int): Cipher suite id.
+        token_tolerance (int): Token tolerance.
+        token_lifetime (int): Token lifetime.
+        token_renewal (int): Token renewal.
 
     """
 
-    def __init__(self, cipher_suite, password, **kwargs):
-        self.cipher_suite = cipher_suite
+    def __init__(self, password, cipher_suite_id=2, token_tolerance=120,
+                 token_lifetime=300, token_renewal=43200):
+        self.cipher_suite_id = cipher_suite_id
         self.password = password
-
-        self.time_tolerance = kwargs.get(
-            "tokenTolerance", 120
-        ) * 1000  #: 2 minutes
-        self.token_lifetime = kwargs.get(
-            "tokenLifetime", 300
-        ) * 1000  #: 5 minutes
-        self.time_renewal = kwargs.get(
-            "tokenRenewal", 43200
-        ) * 1000  #: 12 hours
+        self.token_tolerance = token_tolerance
+        self.token_lifetime = token_lifetime
+        self.token_renewal = token_renewal
 
     def parse_token(self):
         """Parse an OpenToken and apply basic validation checks.

@@ -5,7 +5,7 @@ from __future__ import absolute_import
 
 from Crypto.Protocol.KDF import PBKDF2
 
-from opentoken import validations
+from opentoken import utils
 
 CIPHERS = [
     {
@@ -48,8 +48,11 @@ CIPHERS = [
 
 
 def generate_key(password, cipher_suite_id, salt=None):
-    password = validations.validate_password(password)
-    cipher_suite_id = validations.validate_cipher_suite_id(cipher_suite_id)
+    password = utils.validate_password(password)
+    cipher_suite_id = utils.validate_cipher_suite_id(cipher_suite_id)
+
+    if cipher_suite_id == 0:
+        return None
 
     salt = salt or bytearray([0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0])
     cipher_suite = CIPHERS[cipher_suite_id]

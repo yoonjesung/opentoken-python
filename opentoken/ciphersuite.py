@@ -1,8 +1,6 @@
 """CipherSuite helper module
 """
 
-from __future__ import absolute_import
-
 from Crypto.Protocol.KDF import PBKDF2
 
 from opentoken import utils

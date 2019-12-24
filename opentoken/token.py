@@ -1,6 +1,5 @@
 """Token helper methods
 """
-from __future__ import absolute_import
 
 import base64
 from collections import OrderedDict

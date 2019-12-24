@@ -1,8 +1,6 @@
 """Unit tests for ciphersuite.py
 """
 
-from __future__ import absolute_import
-
 from opentoken import ciphersuite
 
 

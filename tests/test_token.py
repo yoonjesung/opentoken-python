@@ -57,7 +57,7 @@ class TestToken:
         ])
         assert payload == expected_payload
 
-    @patch("opentoken.ciphersuite.generate_key")
+    @patch("opentoken._ciphersuite.generate_key")
     def test_decode_aes_128_canonical(self, decryption_key_mock):
         decryption_key_mock.return_value = base64.standard_b64decode(
             "a66C9MvM8eY4qJKyCXKW+w=="
@@ -69,8 +69,8 @@ class TestToken:
         expected_payload = self.canonical_payload
         assert payload == expected_payload
 
-    @patch("opentoken.token.get_random_bytes")
-    @patch("opentoken.ciphersuite.generate_key")
+    @patch("opentoken._token.get_random_bytes")
+    @patch("opentoken._ciphersuite.generate_key")
     def test_encode_aes_128_canonical(self, encryption_key_mock, iv_mock):
         encryption_key_mock.return_value = base64.standard_b64decode(
             "a66C9MvM8eY4qJKyCXKW+w=="
@@ -84,7 +84,7 @@ class TestToken:
                        "eszNqAAAga5W8Dc4XZwtsZ4qV3_lDI-Zn2_yadHHIhkGqNV5J9kw*"
         assert otk == expected_otk
 
-    @patch("opentoken.ciphersuite.generate_key")
+    @patch("opentoken._ciphersuite.generate_key")
     def test_decode_aes_256_canonical(self, decryption_key_mock):
         decryption_key_mock.return_value = base64.standard_b64decode(
             "a66C9MvM8eY4qJKyCXKW+19PWDeuc3thDyuiumak+Dc="
@@ -99,8 +99,8 @@ class TestToken:
         ])
         assert payload == expected_payload
 
-    @patch("opentoken.token.get_random_bytes")
-    @patch("opentoken.ciphersuite.generate_key")
+    @patch("opentoken._token.get_random_bytes")
+    @patch("opentoken._ciphersuite.generate_key")
     def test_encode_aes_256_canonical(self, encryption_key_mock, iv_mock):
         encryption_key_mock.return_value = base64.standard_b64decode(
             "a66C9MvM8eY4qJKyCXKW+19PWDeuc3thDyuiumak+Dc="
@@ -115,7 +115,7 @@ class TestToken:
                        "_OkW_Kt4yYZ4BBQzw_NR2CNE-g*"
         assert otk == expected_otk
 
-    @patch("opentoken.ciphersuite.generate_key")
+    @patch("opentoken._ciphersuite.generate_key")
     def test_decode_3des_168_canonical(self, decryption_key_mock):
         decryption_key_mock.return_value = base64.standard_b64decode(
             "a66C9MvM8eY4qJKyCXKW+19PWDeuc3th"
@@ -130,8 +130,8 @@ class TestToken:
         ])
         assert payload == expected_payload
 
-    @patch("opentoken.token.get_random_bytes")
-    @patch("opentoken.ciphersuite.generate_key")
+    @patch("opentoken._token.get_random_bytes")
+    @patch("opentoken._ciphersuite.generate_key")
     def test_encode_aes_256_canonical(self, encryption_key_mock, iv_mock):
         encryption_key_mock.return_value = base64.standard_b64decode(
             "a66C9MvM8eY4qJKyCXKW+19PWDeuc3th"

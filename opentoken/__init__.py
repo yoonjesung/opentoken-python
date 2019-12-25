@@ -1,1 +1,1 @@
-from opentoken.opentoken import OpenToken
+from .opentoken import OpenToken

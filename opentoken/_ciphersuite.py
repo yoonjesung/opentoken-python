@@ -3,7 +3,7 @@
 
 from Crypto.Protocol.KDF import PBKDF2
 
-from opentoken import utils
+from opentoken import _utils
 
 CIPHERS = [
     {
@@ -46,8 +46,8 @@ CIPHERS = [
 
 
 def generate_key(password, cipher_suite_id, salt=None):
-    password = utils.validate_password(password)
-    cipher_suite_id = utils.validate_cipher_suite_id(cipher_suite_id)
+    password = _utils.validate_password(password)
+    cipher_suite_id = _utils.validate_cipher_suite_id(cipher_suite_id)
 
     if cipher_suite_id == 0:
         return None

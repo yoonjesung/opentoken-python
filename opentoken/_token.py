@@ -10,7 +10,7 @@ from Crypto.Hash import SHA1, HMAC
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 
-from opentoken import ciphersuite, utils
+from opentoken import _ciphersuite, _utils
 
 
 def encode(payload, cipher_suite_id, password=None):
@@ -26,16 +26,16 @@ def encode(payload, cipher_suite_id, password=None):
         password (str): Password used for encryption/decryption.
 
     """
-    payload = utils.validate_payload(payload)
-    cipher_suite_id = utils.validate_cipher_suite_id(cipher_suite_id)
-    password = utils.validate_password(password)
+    payload = _utils.validate_payload(payload)
+    cipher_suite_id = _utils.validate_cipher_suite_id(cipher_suite_id)
+    password = _utils.validate_password(password)
 
-    cipher = ciphersuite.CIPHERS[cipher_suite_id]
+    cipher = _ciphersuite.CIPHERS[cipher_suite_id]
 
     otk_version = 1
-    encryption_key = ciphersuite.generate_key(password, cipher_suite_id)
+    encryption_key = _ciphersuite.generate_key(password, cipher_suite_id)
     iv_length = cipher["iv_length"]
-    payload = bytes(utils.ordered_dict_to_otk_str(payload), "utf-8")
+    payload = bytes(_utils.ordered_dict_to_otk_str(payload), "utf-8")
     iv = get_random_bytes(iv_length)
 
     if cipher_suite_id == 0:
@@ -76,7 +76,7 @@ def encode(payload, cipher_suite_id, password=None):
     otk_buffer.extend(payload_cipher_text)  #: Payload
 
     otk = base64.urlsafe_b64encode(otk_buffer).decode("utf-8")
-    return utils.reformat_to_otk_b64(otk)
+    return _utils.reformat_to_otk_b64(otk)
 
 
 def decode(otk, cipher_suite_id, password=None):
@@ -88,11 +88,11 @@ def decode(otk, cipher_suite_id, password=None):
         password (str): Password used for encryption/decryption.
 
     """
-    cipher_suite_id = utils.validate_cipher_suite_id(cipher_suite_id)
-    password = utils.validate_password(password)
+    cipher_suite_id = _utils.validate_cipher_suite_id(cipher_suite_id)
+    password = _utils.validate_password(password)
 
-    decryption_key = ciphersuite.generate_key(password, cipher_suite_id)
-    otk = utils.reformat_from_otk_b64(otk)
+    decryption_key = _ciphersuite.generate_key(password, cipher_suite_id)
+    otk = _utils.reformat_from_otk_b64(otk)
     read_index = 0
     otk = bytearray(base64.urlsafe_b64decode(otk))
 
@@ -179,4 +179,4 @@ def decode(otk, cipher_suite_id, password=None):
     if hmac_test.hexdigest() != hmac.hex():
         raise ValueError("HMAC does not match.")
 
-    return utils.otk_str_to_ordered_dict(payload.decode())
+    return _utils.otk_str_to_ordered_dict(payload.decode())

@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 import dateutil.parser
 
-from opentoken import token
+from opentoken import _token
 
 
 class OpenToken:
@@ -39,7 +39,7 @@ class OpenToken:
             OrderedDict: The key-value token pairs.
 
         """
-        parsed_token = token.decode(
+        parsed_token = _token.decode(
             otk_str, self.cipher_suite_id, self.password
         )
 
@@ -101,4 +101,4 @@ class OpenToken:
         otk_dict['not-on-or-after'] = expiry.isoformat()
         otk_dict['renew-until'] = renew_until.isoformat()
 
-        return token.encode(otk_dict, self.cipher_suite_id, self.password)
+        return _token.encode(otk_dict, self.cipher_suite_id, self.password)

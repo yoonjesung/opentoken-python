@@ -4,6 +4,8 @@
 from collections import OrderedDict
 from datetime import datetime, timedelta
 
+import dateutil.parser
+
 from opentoken import token
 
 
@@ -44,11 +46,11 @@ class OpenToken:
         if "subject" not in parsed_token.keys():
             raise ValueError("OpenToken missing 'subject'.")
 
-        not_before = datetime.fromisoformat(parsed_token['not-before'])
-        not_on_or_after = datetime.fromisoformat(
+        not_before = dateutil.parser.isoparse(parsed_token['not-before'])
+        not_on_or_after = dateutil.parser.isoparse(
             parsed_token['not-on-or-after']
         )
-        renew_until = datetime.fromisoformat(parsed_token['renew-until'])
+        renew_until = dateutil.parser.isoparse(parsed_token['renew-until'])
         now = datetime.now()
         tolerance = now + timedelta(seconds=self.token_tolerance)
 

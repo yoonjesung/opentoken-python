@@ -1,7 +1,7 @@
 """CipherSuite helper module
 """
 
-from Crypto.Protocol.KDF import PBKDF2
+from Cryptodome.Protocol.KDF import PBKDF2
 
 from opentoken import _utils
 

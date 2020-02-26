@@ -5,10 +5,10 @@ import base64
 from collections import OrderedDict
 from zlib import compress, decompress
 
-from Crypto.Cipher import AES, DES3
-from Crypto.Hash import SHA1, HMAC
-from Crypto.Random import get_random_bytes
-from Crypto.Util.Padding import pad, unpad
+from Cryptodome.Cipher import AES, DES3
+from Cryptodome.Hash import SHA1, HMAC
+from Cryptodome.Random import get_random_bytes
+from Cryptodome.Util.Padding import pad, unpad
 
 from opentoken import _ciphersuite, _utils
 

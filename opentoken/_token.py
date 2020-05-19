@@ -10,7 +10,7 @@ from Crypto.Hash import SHA1, HMAC
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 
-from opentoken import _ciphersuite, _utils
+from . import _ciphersuite, _utils
 
 
 def encode(payload, cipher_suite_id, password=None):

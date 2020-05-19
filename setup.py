@@ -14,7 +14,7 @@ test_requirements = [
 
 setuptools.setup(
     name="opentoken",
-    version="2.0.0",
+    version="2.0.1",
     description="OpenToken support for python.",
     long_description=readme,
     long_description_content_type='text/markdown',

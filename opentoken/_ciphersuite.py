@@ -3,7 +3,7 @@
 
 from Cryptodome.Protocol.KDF import PBKDF2
 
-from opentoken import _utils
+from . import _utils
 
 CIPHERS = [
     {

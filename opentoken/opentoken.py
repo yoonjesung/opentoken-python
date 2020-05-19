@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 import dateutil.parser
 
-from opentoken import _token
+from . import _token
 
 
 class OpenToken:

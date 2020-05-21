@@ -1,8 +1,8 @@
 """OpenToken module for Python
 """
 
+import datetime
 from collections import OrderedDict
-from datetime import datetime, timedelta
 
 import dateutil.parser
 
@@ -51,8 +51,8 @@ class OpenToken:
             parsed_token['not-on-or-after']
         )
         renew_until = dateutil.parser.isoparse(parsed_token['renew-until'])
-        now = datetime.now()
-        tolerance = now + timedelta(seconds=self.token_tolerance)
+        now = datetime.datetime.now(datetime.timezone.utc)
+        tolerance = now + datetime.timedelta(seconds=self.token_tolerance)
 
         if not_before > not_on_or_after:
             raise ValueError(
@@ -93,9 +93,9 @@ class OpenToken:
         if "subject" not in otk_dict.keys():
             raise ValueError("OpenToken missing 'subject'.")
 
-        now = datetime.now()
-        expiry = now + timedelta(seconds=self.token_lifetime)
-        renew_until = now + timedelta(seconds=self.token_renewal)
+        now = datetime.datetime.now(datetime.timezone.utc)
+        expiry = now + datetime.timedelta(seconds=self.token_lifetime)
+        renew_until = now + datetime.timedelta(seconds=self.token_renewal)
 
         otk_dict['not-before'] = now.isoformat()
         otk_dict['not-on-or-after'] = expiry.isoformat()

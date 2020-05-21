@@ -38,14 +38,14 @@ class TestOpenToken:
 
     def test_not_before(self):
         otkapi = opentoken.OpenToken(password="testPassword")
-        otk = "T1RLAQJS3oa-R4Nknb0yJmJ0Y9qUcH8X_xAwGaXfA8X3a2iKOrMXd" \
-              "9v1AABg-sj5qf5Z-tM11COXqmF1h4oPRt3vJ53fHZjRCkxBeldXk-" \
-              "pkiBtcxhwhEtUBZAUkhd3uuavl8uV3cM96yUtvWF-gWQg9EGOgba7B" \
-              "7gvJ67-pLIgeBc83qP3AjY-YD3UB"
+        otk = "T1RLAQLkWqFnzhcAeHmemSskPxNJ2T3q_BAQFNJH_W9yOmOD5O16Jys" \
+              "vAABwjtZzeZGKKoYAkWyhfwS1nPM-XYMUnj0GW8PvOlrNRRT54b7jOa" \
+              "8acwP5Ax0vGmPThNGA8Unr4Wrt9vOEZ4-DeGxCk70XDLorFJP69uJsF" \
+              "swjqlRQ2vJLOLuMl1goKuOLjWni8yMuctyLPwc4TEh5kA**"
         with pytest.raises(ValueError) as err:
             otkapi.parse_token(otk)
         assert str(err.value) == (
-            "Must not use this token before 4757-11-19T13:35:36.661022."
+            "Must not use this token before 4019-01-22T15:55:30.973481+00:00."
         )
 
     def test_expired(self):

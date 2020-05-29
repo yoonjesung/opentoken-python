@@ -97,8 +97,8 @@ class OpenToken:
         expiry = now + datetime.timedelta(seconds=self.token_lifetime)
         renew_until = now + datetime.timedelta(seconds=self.token_renewal)
 
-        otk_dict['not-before'] = now.isoformat()
-        otk_dict['not-on-or-after'] = expiry.isoformat()
-        otk_dict['renew-until'] = renew_until.isoformat()
+        otk_dict['not-before'] = now.isoformat().split(".")[0] + "Z"
+        otk_dict['not-on-or-after'] = expiry.isoformat().split(".")[0] + "Z"
+        otk_dict['renew-until'] = renew_until.isoformat().split(".")[0] + "Z"
 
         return _token.encode(otk_dict, self.cipher_suite_id, self.password)

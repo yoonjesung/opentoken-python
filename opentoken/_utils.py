@@ -126,5 +126,5 @@ def otk_str_to_ordered_dict(otk_str):
 
     """
     items = otk_str.split("\n")
-    pairs = [tuple(line.split("=")) for line in items]
+    pairs = [tuple(line.split("=")) for line in items if line != ""]
     return OrderedDict(pairs)

@@ -125,6 +125,16 @@ def otk_str_to_ordered_dict(otk_str):
         OrderedDict: OrderedDict representation of the token.
 
     """
-    items = otk_str.split("\n")
-    pairs = [tuple(line.split("=")) for line in items if line != ""]
-    return OrderedDict(pairs)
+    items = otk_str.rstrip().split("\n")
+    pairs = [tuple(filter(None,re.split(r"=(.+)?", line))) for line in items]
+
+    data = dict()
+    for key, value in pairs:
+        prevItem = data.get(key)
+        if (not prevItem):
+            data[key] = value
+        else:
+            previous = [prevItem] if type(prevItem) is not list else prevItem
+            data[key] = previous + [value]
+    return data 
+
